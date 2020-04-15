@@ -166,6 +166,23 @@ skip_users:
   - '/\S*/'
 ```
 
+### Advanced: Exclude roles from nested roles lookups
+
+If the users in your LDAP installation have a large amount of roles, and you have the requirement to resolve nested roles as well, you might run into the following performance issue:
+
+* For each of the users roles, Search Guard resolves nested roles.
+* This means at least one additional LDAP query per role.
+* If a user has many roles, and these roles are deeply nested, this results in a lot of additional LDAP queries
+* This means more network roundtrips and thus, depending on your network latency and LDAP response times, a performance penalty.
+
+However, in most cases not all roles a user has are related to Elasticsearch / Kibana / Search Guard. You might need just one or two roles, and all other roles are irrelevant. If this is the case, you can use the nested role filter feature.
+
+With this feature, you can define a list of roles which are filtered out from the list of the user's roles, **before** nested roles are resolved. **Wildcards** and **regular expressions** are supported.
+
+So if you already know which roles are relevant for your Elasticsearch cluster and which aren't, simply list the irrelevant roles and enjoy improved performance.
+
+For more information on how to exclude users from lookups see the page [Exclude certain users from authentication/authorization](../_docs_auth_auth/auth_auth_configuration.md).
+
 ### Advanced: Active Directory Global Catalog (DSID-0C0906DC)
 
 Depending on your configuration you may need to use port 3268 instead of 389 so that the LDAP module is able to query the global catalog. Changing the port can help to avoid warnings like

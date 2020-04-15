@@ -155,7 +155,10 @@ Possible vales for `type` are:
 
 ### Exclude certain users from authentication/authorization
 
-It is possible to exclude users from authentication and/or authorization by specifying a 'skip_users' section inside the domain (root-level) configuration. **Wildcards** and **regular expressions** are exported.
+It is possible to exclude users from authentication and/or authorization by specifying a 'skip_users' section inside the domain (root-level) configuration. **Wildcards** and **regular expressions** are supported.
+
+This could be useful if fetching roles, let's say from a LDAP server, for a specific user wouldn't make sense since we know in advance that a user might not have any roles defined, e.g. Kibana user, thus saving
+unnecessary network round trips and reducing request latency. 
 
 ```yaml
 skip_users:
