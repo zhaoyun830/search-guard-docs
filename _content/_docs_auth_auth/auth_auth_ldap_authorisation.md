@@ -181,6 +181,14 @@ With this feature, you can define a list of roles which are filtered out from th
 
 So if you already know which roles are relevant for your Elasticsearch cluster and which aren't, simply list the irrelevant roles and enjoy improved performance.
 
+This only has an effect if `resolve_nested_roles` is `true`.
+
+```yaml
+nested_role_filter: <true|false>
+  - 'cn=Michael Jackson,ou*people,o=TEST'
+  - ...
+```
+
 For more information on how to exclude users from lookups see the page [Exclude certain users from authentication/authorization](../_docs_auth_auth/auth_auth_configuration.md).
 
 ### Advanced: Active Directory Global Catalog (DSID-0C0906DC)
