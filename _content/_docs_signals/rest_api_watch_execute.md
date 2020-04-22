@@ -228,8 +228,46 @@ POST /_signals/watch/_main/bad_weather/_execute
 ### Invalid Watch
 
 ```
-POST /_signals/watch/_main/really_bad_weather/_execute
+POST /_signals/watch/_main/_execute
 ```
+
+<!-- {% raw %} -->
+```json
+{
+    "watch": {
+        "trigger": {
+            "schedule": {
+                "cron": "after lunch :-?"
+            }
+        },
+        "checks": [
+            {
+                "type": "sörch",
+                "request": {
+                    "indices": [
+                        "kibana_sample_data_flights"
+                    ]
+                }
+            },
+            {
+                "type": "condition",
+                "source": "data.bad_weather_flights.hits.hits.length > "
+            }
+        ],
+        "actions": [
+            {
+                "type": "email",
+                "account": "test",
+                "throttle_period": "1h",
+                "to": "notify@example.com",
+                "subject": "Bad destination weather for {{data.bad_weather_flights.hits.total.value}} flights over last {{data.constants.window}}!",
+                "text_body": "Time: {{_source.timestamp}}\n  Flight Number: {{_source.FlightNum}}\n  Origin: {{_source.OriginAirportID}}\n  Destination: {{_source.DestAirportID}}"
+            }
+        ]
+    }
+}
+```
+<!-- {% endraw %} -->
 
 **Response**
 
