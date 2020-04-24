@@ -76,7 +76,7 @@ For example, the following watch runs a query against the server logs index to f
 
 ## Using conditions with actions
 
-A condition can also be used to control the execution of an action. Each action can define it's own chain of `check`s, including conditions.
+A condition can also be used to control the execution of an action. Each action can define its own chain of `check`s, including conditions.
 
 Continuing on the example above, the following snippet will send an email to the administrator if the watch fires.
 
