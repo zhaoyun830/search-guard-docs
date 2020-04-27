@@ -82,7 +82,7 @@ The attributes of the `trigger`  attribute in detail:
 
 **Writable:** no
 
-The `severity` attribute contains information about the current severity level of a watch. It is therefore only available, after the severity level has been determined, i.e., only in actions and in the checks defined in these actions.
+The `severity` attribute contains information about the current severity level of a watch. It is therefore only available after the severity level has been determined, i.e., only in actions and in the checks defined in these actions.
 
 It has these attributes:
 
