@@ -1,13 +1,11 @@
 ---
 title: Overview
 html_title: Creating Actions for Signals Alerting
-slug: elasticsearch-alerting-actions
-category: signals
-subcategory: actions
-order: 700
+slug: elasticsearch-alerting-actions-overview
+category: actions
+order: 0
 layout: docs
 edition: community
-canonical: elasticsearch-alerting-actions-overview
 description:
 ---
 
