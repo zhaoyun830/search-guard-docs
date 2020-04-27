@@ -24,14 +24,14 @@ Used to receive, create, update and delete blocks, i.e. blocking users / IP addr
 ```
 /_searchguard/api/blocks/{name}
 ```
-Where `name` is the name of the block.
 
 Scheme of a block definition:
 ```json
 {
   "<block_name>" : {
-    "type" : <"ip" | "name">,
-    "value" : "8.8.8.8" | "john doe",
+    "type" : <"ip" | "name" | "net_mask">
+    "value" : "8.8.8.8" | "john doe" | "127.0.0.0/8",
+    "verdict" : "allow | disallow"
     "description" : "A simple block"
   }
 }
