@@ -135,7 +135,7 @@ demo_ip_blocked:
 
 demo_ip_v6__blocked:
   type: "ip"
-  value: ["f2:18:98:37:13:23"]
+  value: ["0:0:0:0:0:ffff:808:808"]
   verdict: "disallow"
 
 demo_netmask_allow:
