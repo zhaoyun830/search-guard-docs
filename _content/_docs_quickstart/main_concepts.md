@@ -133,14 +133,19 @@ demo_ip_blocked:
   value: ["8.8.8.8"]
   verdict: "disallow"
 
-demo_ip_v6__blocked:
+demo_ip_v6_blocked:
   type: "ip"
   value: ["0:0:0:0:0:ffff:808:808"]
   verdict: "disallow"
 
 demo_netmask_allow:
-  type: "ip"
+  type: "net_mask"
   value: ["127.0.0.0/8"]
+  verdict: "allow"
+
+demo_netmask_v6_allow:
+  type: "net_mask"
+  value: ["1::/64"]
   verdict: "allow"
 ```
 
