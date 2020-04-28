@@ -120,7 +120,7 @@ Search Guard ships with a built-in set of useful action groups like `SGS_READ`, 
 ## Block User / IP address/net mask
 
 Search Guard allows to block users/IP addresses. See the following snippet for three examples of blocks, block by user name and by IP address/net masks.
-Please note that it is possible to block IP addresses and users at runtime, either via the `sgadmin` tool or via the REST API. 
+Please note that it is possible to block IP (v4/v6) addresses and users at runtime, either via the `sgadmin` tool or via the REST API. 
 
 ```yaml
 demo_user_blocked:
@@ -131,6 +131,11 @@ demo_user_blocked:
 demo_ip_blocked:
   type: "ip"
   value: ["8.8.8.8"]
+  verdict: "disallow"
+
+demo_ip_v6__blocked:
+  type: "ip"
+  value: ["f2:18:98:37:13:23"]
   verdict: "disallow"
 
 demo_netmask_allow:
