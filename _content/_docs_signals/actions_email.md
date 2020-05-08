@@ -41,7 +41,7 @@ A basic e-mail action looks like this:
 			"html_body": "<p>Flight Number: {{data.source.FlightNum}}\n  Route: {{data.source.OriginAirportID}} -> {{data.source.DestAirportID}}</p>"
             "attachments" : {
                 "attachment.txt" : {
-                  "type" : "<context_data | request>"
+                  "type" : "<runtime | request>"
                 }
             },
             "request": {
@@ -98,7 +98,7 @@ The basic configuration attributes are:
 
 **attachments.name** Name of the attachment to be included, e.g. 'report.pdf'.
 
-**attachments.type** Currently you can attach the Signal runtime as JSON and any arbitrary response from a HTTP request. Multiple attachments are allowed. See [Request](#Request) for details.
+**attachments.type** Currently you can attach the Signal runtime as JSON ('runtime') and any arbitrary response from a HTTP request ('request'). Multiple attachments are allowed. See [Request](#Request) for details.
 
 Please note that it is mandatory to specify at least one `text_body` or a `html_body`. You can of course provide both, a`text_body` and a `html_body` inside an email action.
 
