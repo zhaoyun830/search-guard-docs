@@ -39,6 +39,11 @@ A basic e-mail action looks like this:
 			"subject": "Bad destination weather for {{data.bad_weather_flights.hits.total.value}} flights over last {{data.constants.window}}!",
 			"text_body": "Flight Number: {{data.source.FlightNum}}\n  Route: {{data.source.OriginAirportID}} -> {{data.source.DestAirportID}}"
 			"html_body": "<p>Flight Number: {{data.source.FlightNum}}\n  Route: {{data.source.OriginAirportID}} -> {{data.source.DestAirportID}}</p>"
+            "attachments" : {
+                "attachment.txt" : {
+                  "type" : "<context_data | request>"
+                }
+            },
             "request": {
                 "method": "GET",
                 "url": "https://my.test.web.hook/report"
@@ -71,6 +76,8 @@ The basic configuration attributes are:
 
 **html_body:** Defines the content of the mail as HTML. Mustache templates can be used to render attributes from the watch runtime data.
 
+**request** You can include the response of any arbitrary HTTP request to the sent mail as an attachment, e.g. include a PDF, JSON or a CSV file from an endpoint to the sent mail. 
+
 **request.method:** Specifies the HTTP request method. Required. One of `GET`, `POST`, `PUT` or `DELETE`.
 
 **request.url:** The URL of the HTTP endpoint. Required.
@@ -85,9 +92,13 @@ The basic configuration attributes are:
 
 **request.auth:** Optional. The authentication method for the HTTP request. See [Authentication](#authentication) for details.
 
-**include_runtime_data:** Optional. If enabled, runtime data will be attached to the e-mail.
-
 **tls:** Configuration for TLS connections. See [TLS](#tls) for details.
+
+**attachments** Defines which attachments to be included. See [Request](#Request) for details.
+
+**attachments.name** Name of the attachment to be included, e.g. 'report.pdf'.
+
+**attachments.type** Currently you can attach the Signal runtime as JSON and any arbitrary response from a HTTP request. Multiple attachments are allowed. See [Request](#Request) for details.
 
 Please note that it is mandatory to specify at least one `text_body` or a `html_body`. You can of course provide both, a`text_body` and a `html_body` inside an email action.
 
