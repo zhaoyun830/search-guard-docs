@@ -68,4 +68,4 @@ The basic configuration attributes are:
 **html_body:** Defines the content of the mail as HTML. Mustache templates can be used to render attributes from the watch runtime data.
 
 
-Please note that it is mandatory to specify at least one `text_body` or a `html_body`. You can of course provide both, a`text_body` and a `html_body` inside an EmailAction.
+Please note that it is mandatory to specify at least one `text_body` or a `html_body`. You can of course provide both, a`text_body` and a `html_body` inside an email action.
