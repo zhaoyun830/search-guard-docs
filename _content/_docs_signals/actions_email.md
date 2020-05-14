@@ -41,12 +41,12 @@ A basic e-mail action looks like this:
 			"html_body": "<p>Flight Number: {{data.source.FlightNum}}\n  Route: {{data.source.OriginAirportID}} -> {{data.source.DestAirportID}}</p>"
             "attachments" : {
                 "attachment.txt" : {
-                  "type" : "<runtime | request>"
+                  "type" : "<runtime|request>",
+                  "request": {
+                    "method": "GET",
+                    "url": "https://my.test.web.hook/report"
+                    }
                 }
-            },
-            "request": {
-                "method": "GET",
-                "url": "https://my.test.web.hook/report"
             }
 		}
 	]
@@ -76,29 +76,29 @@ The basic configuration attributes are:
 
 **html_body:** Defines the content of the mail as HTML. Mustache templates can be used to render attributes from the watch runtime data.
 
-**request** You can include the response of any arbitrary HTTP request to the sent mail as an attachment, e.g. include a PDF, JSON or a CSV file from an endpoint to the sent mail. 
-
-**request.method:** Specifies the HTTP request method. Required. One of `GET`, `POST`, `PUT` or `DELETE`.
-
-**request.url:** The URL of the HTTP endpoint. Required.
-
-**request.path:** Overrides the path of the specified URL. Can be used to specify dynamic paths using Mustache templates. Optional.
-
-**request.query_params:** Overrides the query part of the specified URL. Can be used to specify dynamic queries using Mustache templates. Optional.
-
-**request.body:** The body of the HTTP request. Optional. Mustache templates can be used to render attributes from the watch runtime data.
-
-**request.headers:** Specifies HTTP headers to be sent along the request. Optional.
-
-**request.auth:** Optional. The authentication method for the HTTP request. See [Authentication](#authentication) for details.
-
-**tls:** Configuration for TLS connections. See [TLS](#tls) for details.
-
 **attachments** Defines which attachments to be included. See [Request](#Request) for details.
 
 **attachments.name** Name of the attachment to be included, e.g. 'report.pdf'.
 
 **attachments.type** Currently you can attach the Signal runtime as JSON ('runtime') and any arbitrary response from a HTTP request ('request'). Multiple attachments are allowed. See [Request](#Request) for details.
+
+**attachments.request** You can include the response of any arbitrary HTTP request to the sent mail as an attachment, e.g. include a PDF, JSON or a CSV file from an endpoint to the sent mail. 
+
+**attachments.request.method:** Specifies the HTTP request method. Required. One of `GET`, `POST`, `PUT` or `DELETE`.
+
+**attachments.request.url:** The URL of the HTTP endpoint. Required.
+  
+**attachments.request.path:** Overrides the path of the specified URL. Can be used to specify dynamic paths using Mustache templates. Optional.
+  
+**attachments.request.query_params:** Overrides the query part of the specified URL. Can be used to specify dynamic queries using Mustache templates. Optional.
+  
+**attachments.request.body:** The body of the HTTP request. Optional. Mustache templates can be used to render attributes from the watch runtime data.
+  
+**attachments.request.headers:** Specifies HTTP headers to be sent along the request. Optional.
+  
+**attachments.request.auth:** Optional. The authentication method for the HTTP request. See [Authentication](#authentication) for details.
+
+**attachments.tls:** Configuration for TLS connections. See [TLS](#tls) for details.
 
 Please note that it is mandatory to specify at least one `text_body` or a `html_body`. You can of course provide both, a`text_body` and a `html_body` inside an email action.
 
@@ -112,7 +112,7 @@ Right now, Signals directly supports [basic authentication](#basic-authenticatio
 
 #### Basic Authentication
 
-Basic authentication credentials are configured in the `auth` section if the `request` configuration. Configuring basic auth looks like this:
+Basic authentication credentials are being configured in the `auth` section of the `attachment.request` configuration. Configuring basic auth looks like this:
 
 ```json
 {
@@ -124,10 +124,15 @@ Basic authentication credentials are configured in the `auth` section if the `re
     "to": "notify@example.com",
     "subject": "Bad destination weather for {{data.bad_weather_flights.hits.total.value}} flights over last {{data.constants.window}}!",
     "text_body": "Flight Number: {{data.source.FlightNum}}\n  Route: {{data.source.OriginAirportID}} -> {{data.source.DestAirportID}}",
-    "request": {
-      "url": "https://my.test.web.hook/",
-      "method": "GET",
-      "auth": {"type":"basic","username":"admin","password":"admin"}
+    "attachments" : {
+      "some_text_file.txt": {
+        "type": "request",
+        "request": {
+            "url": "https://my.test.web.hook/",
+            "method": "GET",
+            "auth": {"type":"basic","username":"admin","password":"admin"}
+        }
+      }
     }
   }]
 }
@@ -148,18 +153,28 @@ A TLS configuration might look like this:
 ```json
 {
   "actions": [{
-    "type": "webhook",
-    "name": "my_webhook_action",
-    "request": {
-      "url": "https://my.test.web.hook/",
-      "method": "GET",
-    },
-    "tls": {
-      "trusted_certs": "-----BEGIN CERTIFICATE-----\n....\n-----END CERTIFICATE-----\n",
-      "client_auth": {
-        "certs": "-----BEGIN CERTIFICATE-----\n....\n-----END CERTIFICATE-----\n",
-        "private_key": "-----BEGIN ENCRYPTED PRIVATE KEY-----\n...\n-----END ENCRYPTED PRIVATE KEY-----\n",
-        "private_key_password": "secret"
+    "type": "email",
+    "name": "my_email_action",
+    "throttle_period": "1h",
+    "account": "internal_mail",
+    "to": "notify@example.com",
+    "subject": "Bad destination weather for {{data.bad_weather_flights.hits.total.value}} flights over last {{data.constants.window}}!",
+    "text_body": "Flight Number: {{data.source.FlightNum}}\n  Route: {{data.source.OriginAirportID}} -> {{data.source.DestAirportID}}",
+    "attachments" : {
+      "some_text_file.txt": {
+        "type": "request",
+        "request": {
+            "url": "https://my.test.web.hook/",
+            "method": "GET"
+        },
+        "tls": {
+          "trusted_certs": "-----BEGIN CERTIFICATE-----\n....\n-----END CERTIFICATE-----\n",
+          "client_auth": {
+            "certs": "-----BEGIN CERTIFICATE-----\n....\n-----END CERTIFICATE-----\n",
+            "private_key": "-----BEGIN ENCRYPTED PRIVATE KEY-----\n...\n-----END ENCRYPTED PRIVATE KEY-----\n",
+            "private_key_password": "secret"
+          }
+        }
       }
     }
   }]
