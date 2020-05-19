@@ -37,8 +37,8 @@ A basic e-mail action looks like this:
 			"account": "internal_mail",
 			"to": "notify@example.com",
 			"subject": "Bad destination weather for {{data.bad_weather_flights.hits.total.value}} flights over last {{data.constants.window}}!",
-			"text_body": "Flight Number: {{data.source.FlightNum}}\n  Route: {{data.source.OriginAirportID}} -> {{data.source.DestAirportID}}"
-			"html_body": "<p>Flight Number: {{data.source.FlightNum}}\n  Route: {{data.source.OriginAirportID}} -> {{data.source.DestAirportID}}</p>"
+			"text_body": "Flight Number: {{data.source.FlightNum}}\n  Route: {{data.source.OriginAirportID}} -> {{data.source.DestAirportID}}",
+			"html_body": "<p>Flight Number: {{data.source.FlightNum}}\n  Route: {{data.source.OriginAirportID}} -> {{data.source.DestAirportID}}</p>",
             "attachments" : {
                 "attachment.txt" : {
                   "type" : "<runtime|request>",
