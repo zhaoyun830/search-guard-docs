@@ -100,7 +100,7 @@ The basic configuration attributes are:
 
 **attachments.tls:** Configuration for TLS connections. See [TLS](#tls) for details.
 
-Please note that it is mandatory to specify at least one `text_body` or a `html_body`. You can of course provide both, a`text_body` and a `html_body` inside an email action.
+Please note that it is mandatory to specify at least one `text_body` or a `html_body`. You can of course provide both, a `text_body` and a `html_body` inside an email action.
 
 ## Request
 
