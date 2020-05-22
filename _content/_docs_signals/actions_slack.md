@@ -55,9 +55,9 @@ The basic configuration attributes are:
 
 **text:** Defines the content of the message. Mustache templates can be used to render attributes from the watch runtime data. Optional. See the [Slack documentation](https://api.slack.com/messaging/composing/formatting) for details on how to format the message.
 
-**blocks:** Defines the content of the message in the [Slack Blocks format](https://api.slack.com/block-kit/building). Mustache templates can be used to render attributes from the watch runtime data. Optional. See the [Slack documentation](https://api.slack.com/messaging/composing/formatting) for details on how to format the message.
+**blocks:** Defines the content of the message in the _new_ [Slack Blocks format](https://api.slack.com/block-kit/building). Mustache templates can be used to render attributes from the watch runtime data. Optional. See the [Slack documentation](https://api.slack.com/messaging/composing/formatting) for details on how to format the message.
 
-It is required to have at least a message `text` when there is no `blocks` defined otherwise. Please note it is not mandatory to provide a `text` in addition to `blocks` but it is recommended by Slack in order to have a safe fallback.
+**attachments:** Defines the content of the message in the _old_ [Slack Attachments format](https://api.slack.com/reference/messaging/attachments). Mustache templates can be used to render attributes from the watch runtime data. Optional. See the [Slack documentation](https://api.slack.com/messaging/composing/formatting) for details on how to format the message.
 
 ## Slack Blocks
 
@@ -84,4 +84,67 @@ Slack Blocks allow you to add complex data to the message payload. Slack's [Bloc
        }
     ]
  }
+```
+
+## Slack Attachments
+
+Slack Attachments allow you to add complex data to the message payload. For more information see [Slack Attachments format](https://api.slack.com/reference/messaging/attachments).
+
+```json
+{
+  "actions": [
+    {
+      "type": "slack",
+      "name": "my_slack_action",
+      "throttle_period": "1h",
+      "account": "internal_slack",
+      "text": ":warning:\n**Bad destination weather** for {{data.bad_weather_flights.hits.total.value}} flights over last {{data.constants.window}}",
+      "attachments": [
+        {
+          "blocks": [
+            {
+              "type": "section",
+              "text": {
+                "type": "mrkdwn",
+                "text": "*Alternative hotel options*"
+              }
+            },
+            {
+              "type": "section",
+              "text": {
+                "type": "mrkdwn",
+                "text": "<https://example.com|Bates Motel> :star::star:"
+              },
+              "accessory": {
+                "type": "button",
+                "text": {
+                  "type": "plain_text",
+                  "text": "View",
+                  "emoji": true
+                },
+                "value": "view_alternate_1"
+              }
+            },
+            {
+              "type": "section",
+              "text": {
+                "type": "mrkdwn",
+                "text": "<https://example.com|The Great Northern Hotel> :star::star::star::star:"
+              },
+              "accessory": {
+                "type": "button",
+                "text": {
+                  "type": "plain_text",
+                  "text": "View",
+                  "emoji": true
+                },
+                "value": "view_alternate_2"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
 ```
