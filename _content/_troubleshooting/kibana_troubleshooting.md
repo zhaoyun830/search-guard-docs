@@ -109,11 +109,11 @@ Either access Kibana with HTTPS instead of HTTP, or set:
 searchguard.cookie.secure: false
 ```
 
-## Debugging the authentication flow
+## Debugging the authentication flow with extra logging
 
-In order to debug the authentication flow, you can enable authentication debugging in `kibana.yml`.
+In order to debug the authentication flow, you can enable authentication logging in `kibana.yml`.
 
-**Caution: the logged information may contain sensitive information.**
+**Caution: the logged information may contain sensitive authentication information.**
 
 ```yaml
 searchguard.auth.debug: true
